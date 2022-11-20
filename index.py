@@ -153,29 +153,15 @@ def contact():
 
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
 
-    # prep work
-    from util.github_scrapper import get_github
-    ggh = get_github(repo_link="https://github.com/stars/jgarza9788/lists/portfolio",visible=False)
-    ggh.scrape()
-
-    from util.portfolio import process_portfolio
-    process_portfolio()
-
-
-    # app.debug = True
-    # app.run()
-    # app.run(host='0.0.0.0', port=5000)
-    # app.run(debug=True, host= '192.168.182.1', port="8080")
-    # app.run(debug=True, host= '192.168.23.1', port="8080")
-    app.run(debug=True, host= '192.168.1.130', port="8800")
+#     # prep work
+#     from util.github_scrapper import get_github
+#     ggh = get_github(repo_link="https://github.com/stars/jgarza9788/lists/portfolio",visible=False)
+#     ggh.scrape()
+#     from util.portfolio import process_portfolio
+#     process_portfolio()
 
 
+    # app.run(debug=True, host= '192.168.1.130', port="8800")
 
-
-# run in terminal
-"""
-cd <path to this file>
-flask --app main run
-"""
