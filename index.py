@@ -5,9 +5,9 @@
 import os
 DIR = os.path.dirname(os.path.realpath(__file__))
 
-# portfolio data
-from util.portfolio import portfolio
-p = portfolio()
+# # portfolio data
+# from util.portfolio import portfolio
+# p = portfolio()
 
 # used to compare strings / search
 # from fuzzywuzzy import fuzz
@@ -53,13 +53,13 @@ def theme():
     return res
 
 
-@app.route("/portfolio")
-def portfolio():
-    return render_template("portfolio.html",portfolio_data=p.data,query="")
+# @app.route("/portfolio")
+# def portfolio():
+#     return render_template("portfolio.html",portfolio_data=p.data,query="")
 
-@app.route("/portfolio/")
-def portfolio_blank():
-    return redirect(url_for("portfolio"))
+# @app.route("/portfolio/")
+# def portfolio_blank():
+#     return redirect(url_for("portfolio"))
 
 # @app.route("/portfolio/<query>", methods=['GET', 'POST'])
 # def portfolio_query(query):
@@ -85,9 +85,9 @@ def portfolio_blank():
     
 #     return render_template("portfolio.html",portfolio_data=pl,query=query)
 
-@app.route("/resume")
-def resume():
-    return render_template("resume.html")
+# @app.route("/resume")
+# def resume():
+#     return render_template("resume.html")
 
 
 # class ContactForm(FlaskForm):
