@@ -61,29 +61,29 @@ def portfolio():
 def portfolio_blank():
     return redirect(url_for("portfolio"))
 
-@app.route("/portfolio/<query>", methods=['GET', 'POST'])
-def portfolio_query(query):
+# @app.route("/portfolio/<query>", methods=['GET', 'POST'])
+# def portfolio_query(query):
 
-    print(query)
+#     print(query)
 
-    if len(query) < 2:
-        return redirect(url_for("portfolio"))
+#     if len(query) < 2:
+#         return redirect(url_for("portfolio"))
 
-    query = query.lower()
+#     query = query.lower()
 
-    pl = []
-    for i in p.data:
-        if query in str(i).lower():
-            pl.append(i)
-        else:
-            temp = re.sub(r'[^A-Za-z]+',',',str(i).lower())
-            for w in re.split(',',temp):
-                # print(w)
-                if fuzz.ratio(query, w) > 85:
-                    pl.append(i)
-                    break;
+#     pl = []
+#     for i in p.data:
+#         if query in str(i).lower():
+#             pl.append(i)
+#         else:
+#             temp = re.sub(r'[^A-Za-z]+',',',str(i).lower())
+#             for w in re.split(',',temp):
+#                 # print(w)
+#                 if fuzz.ratio(query, w) > 85:
+#                     pl.append(i)
+#                     break;
     
-    return render_template("portfolio.html",portfolio_data=pl,query=query)
+#     return render_template("portfolio.html",portfolio_data=pl,query=query)
 
 @app.route("/resume")
 def resume():
