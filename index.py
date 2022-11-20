@@ -10,16 +10,16 @@ from util.portfolio import portfolio
 p = portfolio()
 
 # used to compare strings / search
-from fuzzywuzzy import fuzz
+# from fuzzywuzzy import fuzz
 
 # regex
-import re
+# import re
 
 # flask and forms
 from flask import Flask, make_response, render_template, request, url_for, redirect, flash, send_from_directory
-from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, TelField, SubmitField
-from wtforms.validators import DataRequired, Email
+# from flask_wtf import FlaskForm
+# from wtforms import StringField, TextAreaField, TelField, SubmitField
+# from wtforms.validators import DataRequired, Email
 
 
 file = os.path.join(DIR,'util',"secret_key.txt")
