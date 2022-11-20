@@ -5,21 +5,21 @@
 import os
 DIR = os.path.dirname(os.path.realpath(__file__))
 
-# # portfolio data
-# from util.portfolio import portfolio
-# p = portfolio()
+# portfolio data
+from util.portfolio import portfolio
+p = portfolio()
 
 # used to compare strings / search
-# from fuzzywuzzy import fuzz
+from fuzzywuzzy import fuzz
 
 # regex
-# import re
+import re
 
 # flask and forms
 from flask import Flask, make_response, render_template, request, url_for, redirect, flash, send_from_directory
-# from flask_wtf import FlaskForm
-# from wtforms import StringField, TextAreaField, TelField, SubmitField
-# from wtforms.validators import DataRequired, Email
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextAreaField, TelField, SubmitField
+from wtforms.validators import DataRequired, Email
 
 
 file = os.path.join(DIR,'util',"secret_key.txt")
@@ -53,100 +53,100 @@ def theme():
     return res
 
 
-# @app.route("/portfolio")
-# def portfolio():
-#     return render_template("portfolio.html",portfolio_data=p.data,query="")
+@app.route("/portfolio")
+def portfolio():
+    return render_template("portfolio.html",portfolio_data=p.data,query="")
 
-# @app.route("/portfolio/")
-# def portfolio_blank():
-#     return redirect(url_for("portfolio"))
+@app.route("/portfolio/")
+def portfolio_blank():
+    return redirect(url_for("portfolio"))
 
-# @app.route("/portfolio/<query>", methods=['GET', 'POST'])
-# def portfolio_query(query):
+@app.route("/portfolio/<query>", methods=['GET', 'POST'])
+def portfolio_query(query):
 
-#     print(query)
+    print(query)
 
-#     if len(query) < 2:
-#         return redirect(url_for("portfolio"))
+    if len(query) < 2:
+        return redirect(url_for("portfolio"))
 
-#     query = query.lower()
+    query = query.lower()
 
-#     pl = []
-#     for i in p.data:
-#         if query in str(i).lower():
-#             pl.append(i)
-#         else:
-#             temp = re.sub(r'[^A-Za-z]+',',',str(i).lower())
-#             for w in re.split(',',temp):
-#                 # print(w)
-#                 if fuzz.ratio(query, w) > 85:
-#                     pl.append(i)
-#                     break;
+    pl = []
+    for i in p.data:
+        if query in str(i).lower():
+            pl.append(i)
+        else:
+            temp = re.sub(r'[^A-Za-z]+',',',str(i).lower())
+            for w in re.split(',',temp):
+                # print(w)
+                if fuzz.ratio(query, w) > 85:
+                    pl.append(i)
+                    break;
     
-#     return render_template("portfolio.html",portfolio_data=pl,query=query)
+    return render_template("portfolio.html",portfolio_data=pl,query=query)
 
-# @app.route("/resume")
-# def resume():
-#     return render_template("resume.html")
-
-
-# class ContactForm(FlaskForm):
-#     name = StringField('Name')
-#     email = StringField(label='Email', validators=[DataRequired(), Email() ])
-#     phone = TelField(label="Phone#", validators=[DataRequired() ])
-#     message = TextAreaField('Message')
-#     submit = SubmitField(label="Send")
+@app.route("/resume")
+def resume():
+    return render_template("resume.html")
 
 
-# @app.route("/contact", methods=["GET", "POST"])
-# def contact():
-#     print(request.method)
-
-#     form = ContactForm()
-
-#     print(form.validate_on_submit())
-
-#     if form.validate_on_submit():
-
-#         from util import Config
-#         cd = Config.Config().data
-
-#         from email.message import EmailMessage
-#         import ssl
-#         import smtplib
-
-#         print(form.name.data)
-#         print(form.email.data)
-#         print(form.phone.data)
-#         print(form.message.data)
-
-#         em = EmailMessage()
-#         em['From'] = cd['email']
-#         em['To'] = 'JGarza9788@gmail.com'
-#         em['Subject'] = 'contact from website'
-#         body = """
-#             name: {name}
-#             email: {email}
-#             phone: {phone}
-#             message: {message}
-#                 """.format(
-#                     name=form.name.data, 
-#                     email=form.email.data,
-#                     phone=form.phone.data,
-#                     message=form.message.data,
-#                     )
-#         em.set_content(body)
-
-#         context = ssl.create_default_context()
-
-#         with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
-#             smtp.login(cd['email'],cd['password'])
-#             smtp.sendmail(
-#                 em['From'], em['To'], em.as_string()
-#                 )
+class ContactForm(FlaskForm):
+    name = StringField('Name')
+    email = StringField(label='Email', validators=[DataRequired(), Email() ])
+    phone = TelField(label="Phone#", validators=[DataRequired() ])
+    message = TextAreaField('Message')
+    submit = SubmitField(label="Send")
 
 
-#     return render_template("contact.html",form=form)
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    print(request.method)
+
+    form = ContactForm()
+
+    print(form.validate_on_submit())
+
+    if form.validate_on_submit():
+
+        from util import Config
+        cd = Config.Config().data
+
+        from email.message import EmailMessage
+        import ssl
+        import smtplib
+
+        print(form.name.data)
+        print(form.email.data)
+        print(form.phone.data)
+        print(form.message.data)
+
+        em = EmailMessage()
+        em['From'] = cd['email']
+        em['To'] = 'JGarza9788@gmail.com'
+        em['Subject'] = 'contact from website'
+        body = """
+            name: {name}
+            email: {email}
+            phone: {phone}
+            message: {message}
+                """.format(
+                    name=form.name.data, 
+                    email=form.email.data,
+                    phone=form.phone.data,
+                    message=form.message.data,
+                    )
+        em.set_content(body)
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
+            smtp.login(cd['email'],cd['password'])
+            smtp.sendmail(
+                em['From'], em['To'], em.as_string()
+                )
+
+
+    return render_template("contact.html",form=form)
 
 
 
