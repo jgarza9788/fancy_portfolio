@@ -98,57 +98,55 @@ class ContactForm(FlaskForm):
     submit = SubmitField(label="Send")
 
 
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    print(request.method)
+# @app.route("/contact", methods=["GET", "POST"])
+# def contact():
+#     print(request.method)
 
-    form = ContactForm()
+#     form = ContactForm()
 
-    print(form.validate_on_submit())
+#     print(form.validate_on_submit())
 
-    if form.validate_on_submit():
+#     if form.validate_on_submit():
 
-        from util import Config
-        cd = Config.Config().data
+#         from util import Config
+#         cd = Config.Config().data
 
-        from email.message import EmailMessage
-        import ssl
-        import smtplib
+#         from email.message import EmailMessage
+#         import ssl
+#         import smtplib
 
-        print(form.name.data)
-        print(form.email.data)
-        print(form.phone.data)
-        print(form.message.data)
+#         print(form.name.data)
+#         print(form.email.data)
+#         print(form.phone.data)
+#         print(form.message.data)
 
-        em = EmailMessage()
-        em['From'] = cd['email']
-        em['To'] = 'JGarza9788@gmail.com'
-        em['Subject'] = 'contact from website'
-        body = """
-            name: {name}
-            email: {email}
-            phone: {phone}
-            message: {message}
-                """.format(
-                    name=form.name.data, 
-                    email=form.email.data,
-                    phone=form.phone.data,
-                    message=form.message.data,
-                    )
-        em.set_content(body)
+#         em = EmailMessage()
+#         em['From'] = cd['email']
+#         em['To'] = 'JGarza9788@gmail.com'
+#         em['Subject'] = 'contact from website'
+#         body = """
+#             name: {name}
+#             email: {email}
+#             phone: {phone}
+#             message: {message}
+#                 """.format(
+#                     name=form.name.data, 
+#                     email=form.email.data,
+#                     phone=form.phone.data,
+#                     message=form.message.data,
+#                     )
+#         em.set_content(body)
 
-        context = ssl.create_default_context()
+#         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
-            smtp.login(cd['email'],cd['password'])
-            smtp.sendmail(
-                em['From'], em['To'], em.as_string()
-                )
+#         with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
+#             smtp.login(cd['email'],cd['password'])
+#             smtp.sendmail(
+#                 em['From'], em['To'], em.as_string()
+#                 )
 
 
-        
-
-    return render_template("contact.html",form=form)
+#     return render_template("contact.html",form=form)
 
 
 
