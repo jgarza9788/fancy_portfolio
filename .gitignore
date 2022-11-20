@@ -1,3 +1,12 @@
+dont_sync/
+downloaded_resources/
+*.zip
+*.pdf
+*config.json
+*private_variables.py
+*secret_key.txt
+*tempCodeRunnerFile.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
