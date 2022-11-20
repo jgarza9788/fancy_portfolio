@@ -6,7 +6,7 @@ import os
 DIR = os.path.dirname(os.path.realpath(__file__))
 
 # portfolio data
-from portfolio import portfolio
+from util.portfolio import portfolio
 p = portfolio()
 
 # used to compare strings / search
@@ -22,7 +22,7 @@ from wtforms import StringField, TextAreaField, TelField, SubmitField
 from wtforms.validators import DataRequired, Email
 
 
-file = os.path.join(DIR,"secret_key.txt")
+file = os.path.join(DIR,'util',"secret_key.txt")
 sk = ""
 with open(file, "r",encoding="utf-8") as f:
     sk = f.readlines()[0]
@@ -108,7 +108,7 @@ def contact():
 
     if form.validate_on_submit():
 
-        import Config
+        from util import Config
         cd = Config.Config().data
 
         from email.message import EmailMessage
@@ -156,11 +156,11 @@ def contact():
 if __name__ == "__main__":
 
     # prep work
-    from github_scrapper import get_github
+    from util.github_scrapper import get_github
     ggh = get_github(repo_link="https://github.com/stars/jgarza9788/lists/portfolio",visible=False)
     ggh.scrape()
 
-    from portfolio import process_portfolio
+    from util.portfolio import process_portfolio
     process_portfolio()
 
 
