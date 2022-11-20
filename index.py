@@ -90,12 +90,12 @@ def resume():
     return render_template("resume.html")
 
 
-class ContactForm(FlaskForm):
-    name = StringField('Name')
-    email = StringField(label='Email', validators=[DataRequired(), Email() ])
-    phone = TelField(label="Phone#", validators=[DataRequired() ])
-    message = TextAreaField('Message')
-    submit = SubmitField(label="Send")
+# class ContactForm(FlaskForm):
+#     name = StringField('Name')
+#     email = StringField(label='Email', validators=[DataRequired(), Email() ])
+#     phone = TelField(label="Phone#", validators=[DataRequired() ])
+#     message = TextAreaField('Message')
+#     submit = SubmitField(label="Send")
 
 
 # @app.route("/contact", methods=["GET", "POST"])
