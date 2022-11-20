@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.0.279/pdf_viewer.min.css" integrity="sha512-bhJalmRVg29JjmI5PVxobJ3xL71iUqk9yXhGjEtpuBg1tZ9LZZKF7Bdm8u6JifzvnxnsCB/PR9tZzmNEDE/BvQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+<style>
+
+
+
+.resume-grid{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: calc(100% - 3rem - 1rem) 3rem;
+    gap: 1rem;
+
+    height: 100%;
+
+    max-width: 800px;
+    width: 100%;
+
+    margin: auto
+}
+
+.download-button{
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    line-height: 3rem;
+    vertical-align: middle;
+}
+
+.resume{
+    height: 100%;
+
+    max-width: 800px;
+
+    width: 100%;
+
+    border-radius: 0.5rem;
+
+    background-color: white;
+
+    outline: none;
+    border-color: transparent;
+
+
+}
+
+
+</style>
+
+<div class="container">
+
+    <div class="resume-grid">
+
+        <iframe class="resume z-depth-4" src="https://docs.google.com/document/d/e/2PACX-1vTfyQF_RLsjmlFJxM77owVkkIQhA7VdlCTKzO-SccGX2IT_xMyc3zUTtC3l3Fir0Q/pub?embedded=true" >
+        </iframe>
+
+
+        <a class="download-button z-depth-4 waves-effect waves-black btn-color text-color" href="https://drive.google.com/uc?export=download&id=1nJ5br6s2creMRT-kQ8CaXAFXeJTcfZBv" >   <i class="mdi mdi-download"></i> Download </a>
+    </div>
+
+
+        
+</div>
+
+
+{% endblock %}

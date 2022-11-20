@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<script>
+
+  $(document).ready(function(){
+    var ta = document.getElementsByTagName("textarea")[0];
+    ta.classList.add("materialize-textarea");
+    ta.classList.add("text-color");
+    ta.id = "message"
+
+
+    var lbs = document.getElementsByTagName("label");
+    for(var i = 0; i < lbs.length; i++)
+    {
+      lbs[i].classList.add("text-color");
+    }
+
+    var ip = document.getElementsByTagName("input");
+    for(var i = 0; i < ip.length; i++)
+    {
+      ip[i].classList.add("text-color");
+      ip[i].classList.add("validate");
+    }
+
+    var em = document.getElementById("email");
+    em.setAttribute("type", "email");  
+    em.setAttribute("onblur", "validate_email_and_phone()");  
+    em.setAttribute("onfocus", "validate_email_and_phone()");  
+    em.setAttribute("onchange", "validate_email_and_phone()");  
+
+    var pn = document.getElementById("phone");
+    pn.setAttribute("type", "tel");  
+    pn.setAttribute("onblur", "check_phone()");  
+    pn.setAttribute("onfocus", "check_phone()");  
+    pn.setAttribute("onchange", "check_phone()");  
+    pn.addEventListener("keyup", check_phone);
+
+    var submit_button = document.getElementById("submit");
+    submit_button.classList.add("btn");
+    submit_button.classList.add("btn-color");
+    submit_button.classList.add("text-color");
+    submit_button.classList.add("disabled");
+    submit_button.id = "submit";
+    submit_button.name = "submit";
+    submit_button.type = "submit";
+    submit_button.value = "submit";
+
+  });
+
+  function check_phone(){
+
+    var pn = document.getElementById("phone");
+    const regex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+    if (regex.test(pn.value))
+    {
+      pn.classList.remove("invalid");
+      pn.classList.add("valid");
+    }
+    else
+    {
+      pn.classList.remove("valid");
+      pn.classList.add("invalid");
+    }
+
+    validate_email_and_phone();
+
+  }
+
+
+  function validate_email_and_phone()
+  {
+    var em = document.getElementById("email");
+    var pn = document.getElementById("phone");
+    var submit_button = document.getElementById("submit");
+
+    if ( em.classList.contains("valid") && pn.classList.contains("valid") )
+    {
+      submit_button.classList.remove("disabled");
+    }
+    else
+    {
+      submit_button.classList.add("disabled");
+    }
+
+  }
+
+</script>
+
+<style>
+  .container{
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    /* padding: 0 10rem; */
+  }
+
+  .input-field{
+    margin-top: 3rem;;
+  }
+
+  #submit{
+    border-radius: 0.5rem;
+  }
+
+  input:not([type]):focus:not([readonly]),
+  input[type="text"]:not(.browser-default):focus:not([readonly]),
+  input[type="password"]:not(.browser-default):focus:not([readonly]),
+  input[type="email"]:not(.browser-default):focus:not([readonly]),
+  input[type="url"]:not(.browser-default):focus:not([readonly]),
+  input[type="time"]:not(.browser-default):focus:not([readonly]),
+  input[type="date"]:not(.browser-default):focus:not([readonly]),
+  input[type="datetime"]:not(.browser-default):focus:not([readonly]),
+  input[type="datetime-local"]:not(.browser-default):focus:not([readonly]),
+  input[type="tel"]:not(.browser-default):focus:not([readonly]),
+  input[type="number"]:not(.browser-default):focus:not([readonly]),
+  input[type="search"]:not(.browser-default):focus:not([readonly]),
+  textarea.materialize-textarea:focus:not([readonly])
+  {
+    border-bottom: 5px solid #00e5ff !important;
+    box-shadow: 0 5px 0 0 #00e5ff !important;
+  }
+
+  .valid
+  {
+    border-bottom: 5px solid #a6e22e !important;
+  }
+
+  .invalid
+  {
+    border-bottom: 5px solid #f92672 !important;
+  }
+  
+</style>
+
+<div class="container">
+
+  <h3 class="text-color">Contact</h3>
+
+  <form class="form" action method="post" role="form">
+  {% for f in form %}
+    <div class="input-field">
+
+    {% if f.name != "csrf_token" and f.name != "submit" %}
+      <label>{{f.name}}</label>
+    {% endif %}
+    {{f}}
+
+    </div>
+  {% endfor %}
+  </form>
+
+        
+</div>
+
+
+{% endblock %}

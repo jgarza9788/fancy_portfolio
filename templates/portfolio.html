@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<style>
+
+.main-portfolio-grid{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 3rem 1fr;
+
+    padding: 1rem;
+    gap: 1rem;
+
+    width: 100%;
+    height: 100%;
+
+}
+
+.button-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.search-box{
+
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0.5rem;
+
+    display: grid;
+    grid-template-columns: 3rem 1fr  3rem;
+
+}
+
+.browser-default:active,
+.browser-default:focus,
+.browser-default
+{
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: transparent;
+    border: none !important;
+    outline: none !important;
+
+    font-size: 16px;
+    font-size: 1.5rem;
+    line-height: 100%;
+    vertical-align: middle;
+
+    margin-bottom: 24px;
+}
+
+.tool-btn{
+    height: 100%;
+    width: 3rem;
+
+    border-radius: 50%;
+    border-radius: 0.5rem !important;
+
+    line-height: 100%;
+    vertical-align: middle;
+
+    background-color: transparent;
+}
+
+.tool-btn:hover{
+    background-color: transparent;
+}
+
+.tool-btn i{
+
+    font-size: 2rem !important;
+    height: 3rem;
+    width: 3rem;
+
+    /* line-height: 100% !important; */
+    vertical-align: middle !important;
+}
+
+.search-input,
+.search-input:hover,
+.search-input:focus,
+.search-input:active {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    outline: none !important;
+    border: none !important;
+    box-shadow: none    !important;
+}
+
+
+
+.project-grid{
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 20rem;
+    gap: 2.5rem;
+    padding: 2.5rem;
+
+    overflow-y: scroll;
+}
+
+.project-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.project-card{
+    
+    height: 20rem;
+    border-radius: 0.5rem;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background-size: cover;
+    background-position: center center;
+
+    overflow: hidden;
+}
+
+/* .project-card .overlay{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+} */
+
+.card-info{
+    position: relative;
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+
+    padding: 1rem;
+    height: 100% !important;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 3rem 3fr 0.2fr 3rem 3rem ;
+    grid-row: 0;
+
+    overflow: hidden;
+    
+}
+
+
+.card-info a{
+    text-align: left;
+
+    width: 100%;
+
+
+}
+
+.card-info h5,
+.card-info p{
+    text-align: left;
+
+    width: 100%;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+
+}
+
+
+
+.card-info p{
+    /* word-wrap: break-word; */
+    /* white-space:normal; */
+    width: 100%;
+    font-size: 1.25rem;
+}
+
+.card-info i{
+    font-size: 1.5rem !important;
+}
+
+.project-tags{
+
+    text-align: left;
+    white-space: nowrap;
+    /* overflow: overlay; */
+    /* text-overflow: overlay; */
+    text-overflow: clip;
+    overflow-x: scroll !important;
+    
+    line-height: 0.8 !important;
+    /* IE and Edge */
+    -ms-overflow-style: none;  
+    /* Firefox */
+    scrollbar-width: none;  
+
+
+}
+
+.project-tags::-webkit-scrollbar {
+    /* display: none;  */
+
+    height: 0.0rem;
+    background-color: rgba(255,255,255,0.25);
+    border-radius: 1rem;
+
+    transition-duration: 0.7s !important;
+    transition-timing-function: ease-in-out !important;
+}
+
+.project-tags:hover.project-tags::-webkit-scrollbar {
+    height: 0.75rem;
+    background-color: rgba(255,255,255,0.25);
+    border-radius: 1rem;
+}
+
+.project-tags::-webkit-scrollbar-thumb {
+    background-color: #757575;
+    border-radius: 1rem;
+}
+
+
+.project-tags span{
+    font-size: 1rem !important;
+
+    vertical-align: middle;
+
+    padding: 0 0.35rem;
+    margin: 0.35rem 0.00rem !important;
+    
+}
+
+.action-btns{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.btn-flat{
+    height: 3rem;
+    border-radius: 0.5rem;
+
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+
+    margin: 0;
+    padding: 0;
+}
+
+.btn-flat span{
+    font-size: 1rem !important;
+    line-height: 3rem !important;
+    vertical-align: middle !important;
+}
+
+.btn-flat i{
+    width: 100% !important;
+    height: 100% !important;
+    line-height: 3rem !important;
+    vertical-align: middle !important;
+}
+
+
+.btn-flat:hover{
+    background-color: rgba(255,255,255,0.3);
+}
+
+
+.btn-flat:active,
+.btn-flat:focus{
+    background-color: transparent   !important;    
+}
+
+
+</style>
+
+<script>
+
+    let s = document.getElementById("search-input");
+
+
+    $(document).ready(function(){
+        s = document.getElementById("search-input");
+
+    });
+
+
+    function focus_search(){
+        s.focus();
+    }
+
+    function clear_search(){
+        s.value = "";
+        window.location =  window.location.origin + "/portfolio"
+    }
+
+    function on_search(){
+        console.log(s.value);
+        console.log(window.location.origin + "/portfolio/" + s.value);
+        
+        setTimeout(function(){
+
+            window.location =  window.location.origin + "/portfolio/" + s.value;
+
+            }
+            ,500
+        );
+    }
+
+
+
+</script>
+
+<div class="main-portfolio-grid">
+
+    <div class="search-box card-color "> 
+        <a onclick="focus_search()" class="tool-btn btn-floating btn-flat waves-effect waves-color text-color"><i class="mdi mdi-magnify text-color"></i></a>
+        <input id="search-input" class="search-input text-color" type="text" onchange="on_search()" value="{{query}}" />
+        <a onclick="clear_search()" class="tool-btn btn-floating btn-flat waves-effect waves-color text-color"><i class="mdi mdi-close-thick text-color"></i></a>
+    </div>
+
+    <div class="project-grid">
+
+    {% for p in portfolio_data%}
+        <div class="project-card z-depth-4 card-color" style="background-image: url('{{ p.background }}');">
+
+            <div class="card-info text-color">
+                <h5>{{p.name}}</h5>
+                <p>{{p.desc}}</p>
+                <div class="spacer"> </div>
+                
+                <span class="project-tags text-color"> 
+                    {% for t in p.tags%}
+                    <span class="text-color">{{t}}</span>
+                    {% endfor %}
+                </span> 
+
+                <div class="action-btns">
+                    <a class="btn-flat waves-effect waves-color text-color" href="{{p.link}}" target="_blank"> 
+                        <i class="text-color mdi mdi-github"></i>
+                        <span class="text-color">
+                            view on github
+                        </span>
+                    </a>
+
+                    {% if p.video != None%}
+                    <a class="btn-flat waves-effect waves-color text-color" href="{{p.video}}" target="_blank"> 
+                        <i class="text-color mdi mdi-youtube"></i>
+                        <span class="text-color">
+                            view on youtube
+                        </span>
+                    </a>
+                    {% endif %}
+
+                    {% if p.demo != None%}
+                    <a class="btn-flat waves-effect waves-color text-color" href="{{p.demo}}" target="_blank"> 
+                        <i class="text-color mdi mdi-play-circle"></i>
+                        <span class="text-color">
+                            play web-demo
+                        </span>
+                    </a>
+                    {% endif %}
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+    {% endfor %}
+
+
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% include "header.html" %}
+
+
+
+    {% for p in posts %}
+      <!-- {% if -1 == num %} -->
+        <!-- <div class="post-preview"> -->
+          <!-- <a href="{{ url_for('post_num',num=p['id']) }}"> -->
+            <!-- <h2 class="post-title"> -->
+                <!-- {{p["title"]}} -->
+            <!-- </h2> -->
+            <!-- <h3 class="post-subtitle"> -->
+                <!-- {{p["subtitle"]}} -->
+            <!-- </h3> -->
+            <!-- <p> -->
+              <!-- {{p["body"]}} -->
+            <!-- </p> -->
+          <!-- </a> -->
+        <!-- </div> -->
+        <!-- <hr> -->
+      <!-- {% endif %} -->
+
+      {% if p["id"] == num %}
+      <!-- Page Header -->
+      <header class="masthead" style="background-image: url('static/assets/img/post-bg-0.jpg')">
+        <div class="overlay"></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+              <div class="site-heading">
+                <h1>{{p["title"]}}</h1>
+                <span class="subheading">
+                  {{p["subtitle"]}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+
+        <div class="post-preview">
+          <!-- <a href="{{ url_for('post_num',num=p['id']) }}"> -->
+            <!-- <h2 class="post-title">
+                {{p["title"]}}
+            </h2> -->
+            <!-- <h3 class="post-subtitle">
+                {{p["subtitle"]}}
+            </h3> -->
+            <p>
+              {{p["body"]}}
+            </p>
+          <!-- </a> -->
+        </div>
+        <hr>
+      {% endif %}
+
+
+    {% endfor %}
+
+     
+      
+      <!-- Pager -->
+      <div class="clearfix">
+        <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+{% include "footer.html" %}

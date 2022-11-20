@@ -1,0 +1,89 @@
+
+
+:root{
+    --text: black;
+    --text-alt: white;
+    --main: #00e5ff;
+    --main-alt: black;
+    --hover: white;
+    --hover-alt: #00e5ff;
+    --waves: black;
+    --waves-alt: #00e5ff;
+    --cyan: #00e5ff;
+}
+
+.text-color{
+    color: var(--text) !important;
+}
+
+.text-alt{
+    color: var(--text-alt) !important;
+}
+
+.btn-color,
+.btn-color:hover,
+.btn-color:focus {
+    background-color: var(--main);
+}
+
+.btn-color-alt,
+.btn-color-alt:hover,
+.btn-color-alt:focus {
+    background-color: var(--main-alt);
+}
+
+.hover-color:hover{
+    color: var(--hover);
+}
+
+.hover-color-alt:hover{
+    color: var(--hover-alt);
+}
+
+.btn-color:hover{
+    background-color: var(--main);
+}
+
+.hover-color-alt:hover{
+    color: var(--hover-alt);
+}
+
+.waves-effect.waves-color .waves-ripple {
+    background-color: var(--waves);
+}
+
+.waves-effect.waves-color-alt .waves-ripple {
+    background-color: var(--waves-alt);
+}
+
+.waves-effect.waves-cyan .waves-ripple {
+    background-color: var(--cyan);
+}
+
+#logo{
+    filter: brightness(100%);
+    box-shadow: 0.0rem 0.5rem 1rem rgba(0, 0, 0, 0.33);
+}
+
+#logo:hover{
+    filter: brightness(110%);
+    box-shadow: 0.0rem 0.5rem 0rem rgba(0, 0, 0, 0.0);
+}
+
+.card-color{
+    background-color: var(--cyan);
+    opacity: 1.0;
+
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+    
+    box-shadow: 0 16px 24px 2px rgb(0 0 0 / 14%), 0 6px 30px 5px rgb(0 0 0 / 12%), 0 8px 10px -7px rgb(0 0 0 / 20%);
+}
+
+.card-color:hover{
+    background-color: var(--cyan);
+    opacity: 1.0;
+
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%)
+}
+

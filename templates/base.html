@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+
+<head>
+
+  <title>Justin Garza</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="">
+  <meta name="author" content="Justin Garza">
+  <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" /> -->
+  <!-- <meta http-equiv="Pragma" content="no-cache" /> -->
+  <!-- <meta http-equiv="Expires" content="-1" /> -->
+
+  <!-- BootStrap -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" crossorigin="anonymous"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script> -->
+
+  <!-- Material Design Lite -->
+  <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-light_blue.min.css" /> -->
+  <!-- <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
+
+  <!-- Materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Bebas Neue:wght@100;400;900&display=swap" rel="stylesheet"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Fira Sans Extra Condensed:wght@100;400;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira Mono:wght@100;400;900&display=swap" rel="stylesheet">
+
+
+  <!-- mdi icons-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css">
+
+  <!-- JQuery -->
+  <!-- <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
+
+  <link href="../static/css/style.css" rel="stylesheet" />
+  <!-- <link href="../static/css/index.css" rel="stylesheet" /> -->
+  <!-- <link href="../static/css/resume.css" rel="stylesheet" /> -->
+  <!-- <link href="../static/css/contact.css" rel="stylesheet" /> -->
+
+  {% if request.cookies.get("theme") == "light" %}
+  <!-- dark will transition to light on load -->
+  <link id="theme-css" href="../static/css/light.css" rel="stylesheet" />
+  {% else %}
+  <!-- light will transition to dark on load -->
+  <link id="theme-css" href="../static/css/dark.css" rel="stylesheet" />
+  {% endif %}
+
+
+  <script>
+
+    var theme = "dark"; 
+    // {% if request.cookies.get("theme") != None %}
+    // theme = "{{request.cookies.get('theme')}}" ;
+    // {% endif %}
+
+    // console.log(theme);
+
+    var origin_url = window.location.origin;
+    var url = window.location.href;
+
+    $(document).ready(function(){
+
+      console.log($.ajax);
+
+      theme = document.getElementById("current-theme").innerText;
+      // console.log("current-theme: " + theme);
+      init_theme();
+
+      M.AutoInit();
+
+      // console.log(this_url);
+    });
+
+    function add_pulse(btn){
+      btn.classList.add("pulse");
+
+      setTimeout(function() {
+        btn.classList.remove("pulse");
+      }, 500);
+
+    }
+
+    function copy_to_clipboard(text) {
+
+      navigator.clipboard.writeText(text).then(function() {
+        M.toast({html: text + " was copied to clipboard", classes: 'rounded'});
+      })
+
+    }
+
+    function init_theme(t=0){
+
+      var theme_css = document.getElementById("theme-css");
+      theme_css.href = "../static/css/"+theme+".css";
+
+      var icon = document.getElementById("theme-icon");
+      var theme_text = document.getElementById("theme-text");
+      var canvas = document.getElementsByTagName("canvas")[0];
+
+      if (theme == "dark")
+      {
+        icon.classList.add("mdi-brightness-5");
+        icon.classList.remove("mdi-brightness-3");
+
+        theme_text.innerText = "Light Mode";
+
+        canvas.classList.remove("canvas-in");
+        canvas.classList.add("canvas-out");
+        setTimeout(function() {
+          document.getElementsByClassName("dark-mode")[0].id = "fs";
+          document.getElementsByClassName("light-mode")[0].id = "fsx";
+          init();
+          canvas.classList.remove("canvas-out");
+          canvas.classList.add("canvas-in");
+        }, t);
+      }
+      else
+      {
+        icon.classList.add("mdi-brightness-3");
+        icon.classList.remove("mdi-brightness-5");
+
+        theme_text.innerText = "Dark Mode";
+
+        canvas.classList.remove("canvas-in");
+        canvas.classList.add("canvas-out");
+        setTimeout(function() {
+          document.getElementsByClassName("dark-mode")[0].id = "fsx";
+          document.getElementsByClassName("light-mode")[0].id = "fs";
+          init();
+          canvas.classList.remove("canvas-out");
+          canvas.classList.add("canvas-in");
+        }, t);
+      }
+
+    }
+
+    function toggle_theme(){
+
+      if (theme == "dark")
+      {
+        theme = "light";
+      }
+      else
+      {
+        theme = "dark";
+      }
+
+
+      //this will be the page we re_render
+      page = url.replace(origin_url,"").replace("/","")
+      if (page == "")
+      {
+        page = "index";
+      }
+
+      var data = {theme: theme, page: page };
+      console.log(data);
+
+      $.ajax({
+        type: "POST",
+        url: origin_url + "/theme",
+        data: data,
+        // success: setTimeout(function() { document.location.reload();}, 500),
+        success:  init_theme(t=500),
+        dataType: "json"
+      });
+
+            
+
+    }
+
+  </script>
+
+</head>
+<body>
+
+  
+  {% if request.cookies.get("theme") == "light" %}
+  <div id="current-theme" class="display-none">light</div>
+  {% else %}
+  <div id="current-theme" class="display-none">dark</div>
+  {% endif %}
+  <!-- <div>{{ request.cookies.get("theme") }}</div> -->
+  
+
+
+  <!-- ##### topography graphic #####  -->
+  <canvas id="canvas" class="canvas-in" ></canvas>
+  
+  <script id="vs" type="x-shader/vertex">
+    attribute vec3 position;
+
+    void main() {
+    
+      gl_Position = vec4( position, 1.0 );
+    
+    }
+  </script> 
+
+  <script id="fs" type="x-shader/fragment" class="dark-mode"> 
+
+    uniform float time;
+    uniform vec2 resolution;
+
+    // https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+    // Simplex 2D noise
+    //
+
+    // https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+    //	Simplex 3D Noise 
+    //	by Ian McEwan, Ashima Arts
+    //
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// https://github.com/ashima/webgl-noise/blob/master/src/noise3D.glsl
+
+//
+// Description : Array and textureless GLSL 2D/3D/4D simplex 
+//               noise functions.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : stegu
+//     Lastmod : 20201014 (stegu)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+//               https://github.com/stegu/webgl-noise
+// 
+
+vec3 mod289(vec3 x) {
+return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 mod289(vec4 x) {
+return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x) {
+   return mod289(((x*34.0)+10.0)*x);
+}
+
+vec4 taylorInvSqrt(vec4 r)
+{
+return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+float snoise(vec3 v)
+{ 
+const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+// First corner
+vec3 i  = floor(v + dot(v, C.yyy) );
+vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+// Other corners
+vec3 g = step(x0.yzx, x0.xyz);
+vec3 l = 1.0 - g;
+vec3 i1 = min( g.xyz, l.zxy );
+vec3 i2 = max( g.xyz, l.zxy );
+
+//   x0 = x0 - 0.0 + 0.0 * C.xxx;
+//   x1 = x0 - i1  + 1.0 * C.xxx;
+//   x2 = x0 - i2  + 2.0 * C.xxx;
+//   x3 = x0 - 1.0 + 3.0 * C.xxx;
+vec3 x1 = x0 - i1 + C.xxx;
+vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+// Permutations
+i = mod289(i); 
+vec4 p = permute( permute( permute( 
+           i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+         + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+         + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+// Gradients: 7x7 points over a square, mapped onto an octahedron.
+// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+float n_ = 0.142857142857; // 1.0/7.0
+vec3  ns = n_ * D.wyz - D.xzx;
+
+vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+vec4 x_ = floor(j * ns.z);
+vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+vec4 x = x_ *ns.x + ns.yyyy;
+vec4 y = y_ *ns.x + ns.yyyy;
+vec4 h = 1.0 - abs(x) - abs(y);
+
+vec4 b0 = vec4( x.xy, y.xy );
+vec4 b1 = vec4( x.zw, y.zw );
+
+//vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
+//vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
+vec4 s0 = floor(b0)*2.0 + 1.0;
+vec4 s1 = floor(b1)*2.0 + 1.0;
+vec4 sh = -step(h, vec4(0.0));
+
+vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+vec3 p0 = vec3(a0.xy,h.x);
+vec3 p1 = vec3(a0.zw,h.y);
+vec3 p2 = vec3(a1.xy,h.z);
+vec3 p3 = vec3(a1.zw,h.w);
+
+//Normalise gradients
+vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+p0 *= norm.x;
+p1 *= norm.y;
+p2 *= norm.z;
+p3 *= norm.w;
+
+// Mix final noise value
+vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+m = m * m;
+return 105.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
+                              dot(p2,x2), dot(p3,x3) ) );
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+    //uniform float time;
+    //uniform vec2 resolution;
+
+    void main( void ) {
+      
+      // cool looking colors - might use it later 
+      /*
+      vec2 position = - 1.0 + 2.0 * gl_FragCoord.xy / resolution.xy;
+      float red = abs( sin( position.x * position.y + time / 5.0 ) );
+      float green = abs( sin( position.x * position.y + time / 4.0 ) );
+      float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+      gl_FragColor = vec4( red, green, blue, 1.0 );
+      */
+
+      
+      vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+
+      vec3 rgb = vec3(0.0,0.0,0.0);
+
+      //cyan
+      vec3 cyan = vec3(0.0,0.8980,1.0);
+
+      p.x += sin(time);
+      p.y += cos(time);
+
+      vec3 xyt  = vec3(p.x * 0.5 ,p.y * 0.5,time);
+
+      float f = snoise(xyt);
+
+      float d = 0.0;
+
+      d = 1.0 - abs(f-0.5);
+      d = sin(25.0 * d);
+
+      if (d >= 0.9)
+      {
+        d = 1.0;
+      }
+      else if (d >= 0.89)
+      {
+        d = 0.75;
+      }
+      else if (d >= 0.88)
+      {
+        d = 0.5;
+      }
+      else if (d >= 0.87)
+      {
+        d = 0.25;
+      }
+      else
+      {
+        d = 0.0;
+      }
+
+      rgb += cyan * d;
+
+      rgb *= 0.33;
+      
+      gl_FragColor = vec4(rgb.x, rgb.y, rgb.z, 1.0);
+      
+
+    }
+
+  </script> 
+
+  <script id="fsx" type="x-shader/fragment" class="light-mode"> 
+
+    uniform float time;
+    uniform vec2 resolution;
+
+    // https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+    // Simplex 2D noise
+    //
+
+    // https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+    //	Simplex 3D Noise 
+    //	by Ian McEwan, Ashima Arts
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// https://github.com/ashima/webgl-noise/blob/master/src/noise3D.glsl
+//
+// Description : Array and textureless GLSL 2D/3D/4D simplex 
+//               noise functions.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : stegu
+//     Lastmod : 20201014 (stegu)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+//               https://github.com/stegu/webgl-noise
+// 
+
+vec3 mod289(vec3 x) {
+return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 mod289(vec4 x) {
+return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x) {
+   return mod289(((x*34.0)+10.0)*x);
+}
+
+vec4 taylorInvSqrt(vec4 r)
+{
+return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+float snoise(vec3 v)
+{ 
+const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+// First corner
+vec3 i  = floor(v + dot(v, C.yyy) );
+vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+// Other corners
+vec3 g = step(x0.yzx, x0.xyz);
+vec3 l = 1.0 - g;
+vec3 i1 = min( g.xyz, l.zxy );
+vec3 i2 = max( g.xyz, l.zxy );
+
+vec3 x1 = x0 - i1 + C.xxx;
+vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+// Permutations
+i = mod289(i); 
+vec4 p = permute( permute( permute( 
+           i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+         + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+         + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+// Gradients: 7x7 points over a square, mapped onto an octahedron.
+// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+float n_ = 0.142857142857; // 1.0/7.0
+vec3  ns = n_ * D.wyz - D.xzx;
+
+vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+vec4 x_ = floor(j * ns.z);
+vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+vec4 x = x_ *ns.x + ns.yyyy;
+vec4 y = y_ *ns.x + ns.yyyy;
+vec4 h = 1.0 - abs(x) - abs(y);
+
+vec4 b0 = vec4( x.xy, y.xy );
+vec4 b1 = vec4( x.zw, y.zw );
+
+//vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
+//vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
+vec4 s0 = floor(b0)*2.0 + 1.0;
+vec4 s1 = floor(b1)*2.0 + 1.0;
+vec4 sh = -step(h, vec4(0.0));
+
+vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+vec3 p0 = vec3(a0.xy,h.x);
+vec3 p1 = vec3(a0.zw,h.y);
+vec3 p2 = vec3(a1.xy,h.z);
+vec3 p3 = vec3(a1.zw,h.w);
+
+//Normalise gradients
+vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+p0 *= norm.x;
+p1 *= norm.y;
+p2 *= norm.z;
+p3 *= norm.w;
+
+// Mix final noise value
+vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+m = m * m;
+return 105.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
+                              dot(p2,x2), dot(p3,x3) ) );
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+    //uniform float time;
+    //uniform vec2 resolution;
+
+    void main( void ) {
+      
+      // cool looking colors - might use it later 
+      /*
+      vec2 position = - 1.0 + 2.0 * gl_FragCoord.xy / resolution.xy;
+      float red = abs( sin( position.x * position.y + time / 5.0 ) );
+      float green = abs( sin( position.x * position.y + time / 4.0 ) );
+      float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+      gl_FragColor = vec4( red, green, blue, 1.0 );
+      */
+
+      
+      vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
+
+      vec3 rgb = vec3(1.0,1.0,1.0);
+
+      //cyan
+      vec3 cyan = vec3(0.0,0.8980,1.0);
+
+      p.x += sin(time);
+      p.y += cos(time);
+
+      vec3 xyt  = vec3(p.x * 0.5 ,p.y * 0.5,time);
+
+      float f = snoise(xyt);
+
+      float d = 0.0;
+
+      d = 1.0 - abs(f-0.5);
+      d = sin(25.0 * d);
+
+      if (d >= 0.9)
+      {
+        d = 1.0;
+      }
+      else if (d >= 0.89)
+      {
+        d = 0.75;
+      }
+      else if (d >= 0.88)
+      {
+        d = 0.5;
+      }
+      else if (d >= 0.87)
+      {
+        d = 0.25;
+      }
+      else
+      {
+        d = 0.0;
+      }
+
+      cyan =  1.0 - cyan;
+      
+      rgb -= cyan * d;
+
+      rgb += vec3(0.66,0.66,0.66);
+      
+      gl_FragColor = vec4(rgb.x, rgb.y, rgb.z, 1.0);
+      
+
+    }
+
+  </script> 
+
+  <script>
+
+    function getTime(){
+
+      var d = new Date();
+      var mms = 0.0;
+
+      mms += d.getMinutes() * 60.0 * 1000.0;
+      mms += d.getSeconds() * 1000.0;
+      mms += d.getMilliseconds();
+
+      // console.log(Math.sin(mms/3600000.0));
+
+      return Math.sin(mms/3600000.0) * 25.0;
+    }
+
+
+    /**
+     * Provides requestAnimationFrame in a cross browser way.
+     * paulirish.com/2011/requestanimationframe-for-smart-animating/
+     */
+    window.requestAnimationFrame = window.requestAnimationFrame || ( function() {
+
+    return  window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(  callback, element ) {
+          window.setTimeout( callback, 1000 / 60 );
+        };
+
+    })();
+
+
+    var canvas, 
+      gl, 
+      buffer, 
+      vertex_shader, fragment_shader, 
+      currentProgram,
+      vertex_position,
+      timeLocation,
+      resolutionLocation,
+      parameters = {  
+              start_time  : getTime(), 
+              time        : 0, 
+              screenWidth : 0, 
+              screenHeight: 0,
+              // theme :  theme_sh,
+            };
+
+    init();
+    animate();
+
+
+    function init() {
+
+      vertex_shader = document.getElementById('vs').textContent;
+      fragment_shader = document.getElementById('fs').textContent;
+      canvas = document.querySelector( 'canvas' );
+
+
+      // Initialise WebGL
+
+      try {
+
+        gl = canvas.getContext( 'experimental-webgl' );
+
+      } catch( error ) { }
+
+      if ( !gl ) {
+
+        throw "cannot create webgl context";
+
+      }
+
+      // Create Vertex buffer (2 triangles)
+
+      buffer = gl.createBuffer();
+      gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+      gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( [ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ] ), gl.STATIC_DRAW );
+
+      // Create Program
+
+      currentProgram = createProgram( vertex_shader, fragment_shader );
+
+      timeLocation = gl.getUniformLocation( currentProgram, 'time' );
+      resolutionLocation = gl.getUniformLocation( currentProgram, 'resolution' );
+
+    }
+
+    function createProgram( vertex, fragment ) {
+
+      var program = gl.createProgram();
+
+      var vs = createShader( vertex, gl.VERTEX_SHADER );
+      var fs = createShader( '#ifdef GL_ES\nprecision highp float;\n#endif\n\n' + fragment, gl.FRAGMENT_SHADER );
+
+      if ( vs == null || fs == null ) return null;
+
+      gl.attachShader( program, vs );
+      gl.attachShader( program, fs );
+
+      gl.deleteShader( vs );
+      gl.deleteShader( fs );
+
+      gl.linkProgram( program );
+
+      if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+
+        alert( "ERROR:\n" +
+        "VALIDATE_STATUS: " + gl.getProgramParameter( program, gl.VALIDATE_STATUS ) + "\n" +
+        "ERROR: " + gl.getError() + "\n\n" +
+        "- Vertex Shader -\n" + vertex + "\n\n" +
+        "- Fragment Shader -\n" + fragment );
+
+        return null;
+
+      }
+
+      return program;
+
+    }
+
+    function createShader( src, type ) {
+
+      var shader = gl.createShader( type );
+
+      gl.shaderSource( shader, src );
+      gl.compileShader( shader );
+
+      if ( !gl.getShaderParameter( shader, gl.COMPILE_STATUS ) ) {
+
+        alert( ( type == gl.VERTEX_SHADER ? "VERTEX" : "FRAGMENT" ) + " SHADER:\n" + gl.getShaderInfoLog( shader ) );
+        return null;
+
+      }
+
+      return shader;
+
+    }
+
+    function resizeCanvas( event ) {
+
+      if ( canvas.width != canvas.clientWidth ||
+          canvas.height != canvas.clientHeight ) {
+
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+
+        parameters.screenWidth = canvas.width;
+        parameters.screenHeight = canvas.height;
+
+        gl.viewport( 0, 0, canvas.width, canvas.height );
+
+      }
+
+    }
+
+    function animate() {
+
+      resizeCanvas();
+      render();
+      requestAnimationFrame( animate );
+
+    }
+
+    function render() {
+
+      if ( !currentProgram ) return;
+
+      
+      //parameters.time = new Date().getTime() - parameters.start_time;
+      parameters.time = getTime();
+
+      gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+
+      // Load program into GPU
+
+      gl.useProgram( currentProgram );
+
+      // Set values to program variables
+
+      //gl.uniform1f( timeLocation, parameters.time / 1000 );
+      gl.uniform1f( timeLocation, parameters.time );
+      gl.uniform2f( resolutionLocation, parameters.screenWidth, parameters.screenHeight );
+
+      // Render geometry
+
+      gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+      gl.vertexAttribPointer( vertex_position, 2, gl.FLOAT, false, 0, 0 );
+      gl.enableVertexAttribArray( vertex_position );
+      gl.drawArrays( gl.TRIANGLES, 0, 6 );
+      gl.disableVertexAttribArray( vertex_position );
+
+    }
+  </script> 
+  <!-- ##### ***end*** topography graphic #####  -->
+
+<main class="main-grid-container">
+
+
+  <div class="nav-grid main-grid-item ">
+
+    <a href="{{url_for('index')}}" class="nav-head">
+
+      <div class="nav-head-btn waves-effect waves-cyan btn ">
+        <img id="logo" class="logo-dm"></img>
+        <span id="logo-text" class="text-color">Justin Garza</span>
+      </div>
+
+    </a>
+
+    <a href="{{url_for('index')}}" class="nav-btn nav-item waves-effect waves-color btn btn-color hover-color text-color z-depth-4 nav-btn-head">
+      <i class="mdi mdi-account-circle"></i>
+      <span>Justin Garza</span>
+    </a>
+
+    <!-- <a href="{{url_for('resume')}}" target="_blank" class="nav-btn nav-item waves-effect waves-color btn btn-color hover-color text-color z-depth-4"> -->
+    <!-- <a href="../static/assets/JustinGarza_pyDev.pdf" target="_blank" class="nav-btn nav-item waves-effect waves-color btn btn-color hover-color text-color z-depth-4"> -->
+    <a href="https://drive.google.com/file/d/1ndDoQvbNE9tdAMT3IA4kFu2kMi2MwVz6/view" target="_blank" class="nav-btn nav-item waves-effect waves-color btn btn-color hover-color text-color z-depth-4">
+      <i class="mdi mdi-file-document"></i>
+      <span>Resume</span>
+    </a>
+
+    <a href="{{url_for('portfolio')}}" class="nav-btn nav-item waves-effect waves-color btn btn-color hover-color text-color z-depth-4">
+      <i class="mdi mdi-folder"></i>
+      <span>Portfolio</span>
+    </a>
+
+    <a href="{{url_for('contact')}}" class="nav-btn nav-item waves-effect waves-color btn btn-color hover-color text-color z-depth-4">
+      <i class="mdi mdi-email"></i>
+      <span>Contact</span>
+    </a>
+
+    <div class="nav-spacer-lg-md"></div>
+
+    <button onclick="toggle_theme()" id="theme-btn" class="nav-btn nav-item waves-effect hover-color-alt text-alt waves-color-alt btn-color-alt z-depth-4">
+      <i id="theme-icon" class="mdi mdi-brightness-3"></i>
+      <span id="theme-text">Light Theme</span>
+    </button> 
+
+
+  </div>
+
+  <div class="main-grid-item">
+
+    {% block content %}
+    {% endblock %}
+
+  </div>
+</main>
+
+
+</body>
+</html>
